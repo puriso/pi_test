@@ -10,7 +10,7 @@ class WaterTempSencer:
     C25     = K + 25 # 摂氏25度
 
     def temp_celsius(self, volt):
-        r = self.resistance_from_volt(input)
+        r = self.resistance_from_volt(volt)
         return self.resistance_to_temp(r)
 
     def resistance_from_volt(self, volt):
