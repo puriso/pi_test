@@ -20,12 +20,19 @@ class WaterTempSencer:
     def resistance_to_temp(self, resistance):
         return self.B_CONST / (math.log(resistance / self.R25C) + (self.B_CONST / self.C25)) - self.K
 
-vref = 5.0
-ch1 = MCP3008(channel=0)
+
+class OilPressSencer:
+    def pressure(self, volt):
+        return (4.23e-3*volt) * 100 # BAR
+
+vref              = 5.0
+ch1               = MCP3008(channel=0)
+ch2               = MCP3008(channel=1)
 water_temp_sencer = WaterTempSencer()
+oil_press_sencer  = OilPressSencer()
 
 while True:
-    volt = ch1.value * vref
-    t = water_temp_sencer.temp_celsius(volt)
-    print(t)
+    water_temp = str(water_temp_sencer.temp_celsius(ch1.value * vref))
+    oil_press = str(oil_press_sencer.pressure(ch2.value * vref))
+    print(water_temp + 'C|' + oil_press + 'BAR')
 
